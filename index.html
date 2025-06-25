@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Joe Michael Tanilon - Software Engineer</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%230f0f0f'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.35em' font-size='32' font-family='Inter, Arial, sans-serif' fill='%23A8FF3E'%3EJ%3C/text%3E%3C/svg%3E" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+    <!-- p5.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
+
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+      body {
+        scroll-behavior: smooth;
+        font-family: "Inter", sans-serif;
+        background-color: #0f0f0f;
+        color: white;
+      }
+      .highlight {
+        color: #a8ff3e;
+      }
+      #p5-bg-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+      main,
+      header,
+      section,
+      footer {
+        position: relative;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body class="overflow-x-hidden">
+    <!-- Header -->
+    <header class="w-full fixed top-0 left-0 z-50 bg-black bg-opacity-80" x-data="{ open: false }">
+      <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+        <h1 class="text-2xl font-extrabold text-white">Joe<span class="highlight">Michael</span></h1>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex gap-6 text-sm text-white">
+          <!-- Repeat nav items like before -->
+          <template
+            x-for="(item, i) in [
+        { href: '#about', label: 'About Me', icon: 'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4S8 5.79 8 8s1.79 4 4 4z M6 20c0-2.21 3.58-4 6-4s6 1.79 6 4v1H6v-1z' },
+        { href: '#skills', label: 'Skills', icon: 'M10 6h4v12h-4z M4 10h4v8H4zM16 4h4v16h-4z' },
+        { href: '#portfolio', label: 'Portfolio', icon: 'M3 4h18v16H3z M3 10h18' },
+        { href: '#contact', label: 'Contact', icon: 'M21 15V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10 M3 19h18 M7 19v2 M17 19v2' }
+      ]"
+            :key="i"
+          >
+            <a :href="item.href" class="relative flex items-center gap-2 text-white hover:text-[#a8ff3e] group">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-current" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path :d="item.icon" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span x-text="item.label"></span>
+              <span class="absolute bottom-0 left-1/2 w-0 h-[1px] bg-[#a8ff3e] transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+            </a>
+          </template>
+        </nav>
+
+        <!-- Hamburger Button -->
+        <button @click="open = !open" class="md:hidden text-white focus:outline-none">
+          <svg class="w-6 h-6 text-current" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            <path x-show="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Nav -->
+      <div x-show="open" x-transition class="md:hidden px-6 pb-4">
+        <div class="flex flex-col gap-4 text-sm text-white">
+          <a href="#about" @click="open = false" class="hover:text-[#a8ff3e]">About Me</a>
+          <a href="#skills" @click="open = false" class="hover:text-[#a8ff3e]">Skills</a>
+          <a href="#portfolio" @click="open = false" class="hover:text-[#a8ff3e]">Portfolio</a>
+          <a href="#contact" @click="open = false" class="hover:text-[#a8ff3e]">Contact</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="pt-24 md:pt-36 pb-16 px-6 bg-black text-center md:text-left">
+      <div class="max-w-6xl mx-auto grid md:grid-cols-2 items-center gap-10">
+        <div data-aos="fade-right">
+          <p class="text-[#a8ff3e] font-semibold">Hello, I am</p>
+          <h1 class="text-4xl md:text-6xl font-extrabold mt-2">Joe Michael Tanilon</h1>
+          <p class="mt-4 text-gray-300 text-lg">A Software Engineer</p>
+          <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <a href="Resume-JoeMichaelTanilon.pdf" download="Joe_Resume.pdf" class="bg-[#a8ff3e] text-black px-6 py-3 rounded font-semibold transition hover:bg-[#cfff70]">Download CV</a>
+            <a href="#portfolio" class="border border-white px-6 py-3 rounded font-semibold transition hover:bg-white hover:text-black">My Work</a>
+          </div>
+        </div>
+        <div data-aos="fade-left" class="flex justify-center md:justify-center">
+          <dotlottie-player src="https://lottie.host/39a77d35-b2a2-4ad8-9aeb-e7063712c397/NaxJzdITvI.lottie" background="transparent" speed="1" style="width: 300px; height: 300px" loop autoplay></dotlottie-player>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="services" class="py-20 h-screen px-6 bg-[#151515]">
+      <div class="max-w-6xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6">My <span class="highlight">Skills</span></h2>
+        <p class="text-gray-400 max-w-2xl mx-auto mb-10">Tools and technologies I've worked with to build modern, efficient, and scalable applications.</p>
+        <div class="flex flex-wrap justify-center items-center gap-6">
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=js" alt="JavaScript" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">JavaScript</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">TypeScript</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=react" alt="React" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">React</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">Next.js</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=angular" alt="Angular" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">Angular</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">Node.js</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=express" alt="Express.js" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">Express</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=html" alt="HTML" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">HTML</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=css" alt="CSS" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">CSS</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=tailwind" alt="Tailwind CSS" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">Tailwind</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=bootstrap" alt="Bootstrap" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">Bootstrap</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=php" alt="PHP" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">PHP</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=cs" alt="C#" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">C#</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=dotnet" alt=".NET" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">.NET</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=mysql" alt="MySQL" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">MySQL</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">MongoDB</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img src="https://skillicons.dev/icons?i=git" alt="Git" class="h-10 hover:scale-110 transition duration-200" />
+            <span class="text-sm text-gray-400 mt-1">Git</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 px-6 bg-black">
+      <div class="max-w-6xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6 text-white" data-aos="fade-up">My <span class="highlight">Portfolio</span></h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <!-- Project 1: Cogon Reservation -->
+          <a href="https://cogonreservation.site" target="_blank" rel="noopener" class="block group">
+            <img src="cogon.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" alt="Cogon Reservation" />
+            <div class="mt-3 text-lg font-semibold text-white group-hover:text-[#a8ff3e]">CogonReservation.site</div>
+            <div class="text-[#a8ff3e] text-sm mb-2">Room Reservation Web App</div>
+            <div class="flex justify-center flex-wrap gap-2 mt-2">
+              <img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=express" alt="Express.js" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=angular" alt="Tailwind" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=tailwind" alt="Tailwind" class="h-6" />
+            </div>
+          </a>
+
+          <!-- Project 2: Portfolio Website -->
+          <a href="/" target="_blank" rel="noopener" class="block group">
+            <img src="portfolio.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="100" alt="Portfolio Website" />
+            <div class="mt-3 text-lg font-semibold text-white group-hover:text-[#a8ff3e]">Portfolio Website</div>
+            <div class="text-[#a8ff3e] text-sm mb-2">Personal Portfolio Template</div>
+            <div class="flex justify-center flex-wrap gap-2 mt-2">
+              <img src="https://skillicons.dev/icons?i=html" alt="HTML" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=tailwind" alt="Tailwind" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=gsap" alt="GSAP" class="h-6" />
+            </div>
+          </a>
+
+          <!-- Project 3: UI/UX Dashboard -->
+          <a href="https://dragondelivery.ct.ws/" target="_blank" rel="noopener" class="block group">
+            <img src="uidesign.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="200" alt="UI/UX Dashboard" />
+            <div class="mt-3 text-lg font-semibold text-white group-hover:text-[#a8ff3e]">UI/UX Dashboard</div>
+            <div class="text-[#a8ff3e] text-sm mb-2">Admin Dashboard Design</div>
+            <div class="flex justify-center flex-wrap gap-2 mt-2">
+              <img src="https://skillicons.dev/icons?i=php" alt="PHP" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=bootstrap" alt="Bootstrap" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=mysql" alt="MySQL" class="h-6" />
+            </div>
+          </a>
+
+          <a href="https://ibcauto.com" target="_blank" rel="noopener" class="block group">
+            <img src="ibc.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="200" alt="UI/UX Dashboard" />
+            <div class="mt-3 text-lg font-semibold text-white group-hover:text-[#a8ff3e]">Work Project</div>
+            <div class="text-[#a8ff3e] text-sm mb-2">Maintained And Develop Features</div>
+            <div class="flex justify-center flex-wrap gap-2 mt-2">
+              <img src="https://skillicons.dev/icons?i=dotnet" alt="PHP" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=angular" alt="Bootstrap" class="h-6" />
+            </div>
+          </a>
+
+          <a href="https://logged.jetlogistics.co.jp/login" target="_blank" rel="noopener" class="block group">
+            <img src="jet.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="200" alt="UI/UX Dashboard" />
+            <div class="mt-3 text-lg font-semibold text-white group-hover:text-[#a8ff3e]">Work Project</div>
+            <div class="text-[#a8ff3e] text-sm mb-2">Maintained And Develop Features</div>
+            <div class="flex justify-center flex-wrap gap-2 mt-2">
+              <img src="https://skillicons.dev/icons?i=dotnet" alt="PHP" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=angular" alt="Bootstrap" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=tailwind" alt="Tailwind" class="h-6" />
+            </div>
+          </a>
+
+          <a href="https://globalinspectionspecialist.com/home" target="_blank" rel="noopener" class="block group">
+            <img src="gis.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="200" alt="UI/UX Dashboard" />
+            <div class="mt-3 text-lg font-semibold text-white group-hover:text-[#a8ff3e]">Work Project</div>
+            <div class="text-[#a8ff3e] text-sm mb-2">Maintained And Develop Features</div>
+            <div class="flex justify-center flex-wrap gap-2 mt-2">
+              <img src="https://skillicons.dev/icons?i=dotnet" alt="PHP" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=angular" alt="Bootstrap" class="h-6" />
+              <img src="https://skillicons.dev/icons?i=tailwind" alt="Tailwind" class="h-6" />
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6 bg-gradient-to-br from-[#151515] via-[#1a1a1a] to-[#232526] relative overflow-hidden">
+      <div class="absolute -top-32 -left-32 w-96 h-96 bg-[#a8ff3e] opacity-20 rounded-full blur-3xl z-0"></div>
+      <div class="absolute bottom-0 right-0 w-80 h-80 bg-[#a8ff3e] opacity-10 rounded-full blur-2xl z-0"></div>
+      <div class="max-w-4xl mx-auto relative z-10">
+        <h2 class="text-3xl font-bold mb-10 text-center" data-aos="fade-up">Contact <span class="highlight">Me</span></h2>
+        <div class="grid md:grid-cols-2 gap-10 items-start">
+          <!-- Contact Info -->
+          <div class="mb-8 text-gray-300 md:mb-0 flex flex-col gap-6 items-center justify-center" data-aos="fade-up" data-aos-delay="100">
+            <div class="flex items-center gap-3">
+              <svg class="w-7 h-7 text-[#a8ff3e]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 12a4 4 0 01-8 0 4 4 0 018 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14v7m0 0H9m3 0h3" />
+              </svg>
+              <span class="font-semibold text-white">Email:</span>
+            </div>
+            <a href="mailto:joemichaeltanilon@email.com" class="text-[#a8ff3e] hover:underline block break-all text-lg">joemichaeltanilon@gmail.com</a>
+            <div class="flex items-center gap-3 mt-4">
+              <svg class="w-7 h-7 text-[#a8ff3e]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm0 8a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-2zm8-8a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zm0 8a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+              <span class="font-semibold text-white">Phone:</span>
+            </div>
+            <a href="tel:+639063516613" class="text-[#a8ff3e] hover:underline block text-lg">0906 351 6613</a>
+          </div>
+          <!-- Contact Form -->
+          <form id="contactForm" class="space-y-6 bg-[#181818] rounded-xl shadow-lg p-8 border border-[#232526] relative z-10" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-[#a8ff3e]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+              <input type="text" id="name" placeholder="Your Name" class="w-full p-3 bg-[#232526] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#a8ff3e]" required />
+            </div>
+            <div class="flex items-center gap-3">
+              <svg class="w-6 h-6 text-[#a8ff3e]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 12a4 4 0 01-8 0 4 4 0 018 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 14v7m0 0H9m3 0h3" />
+              </svg>
+              <input type="email" id="email" placeholder="Your Email" class="w-full p-3 bg-[#232526] rounded text-white focus:outline-none focus:ring-2 focus:ring-[#a8ff3e]" required />
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-[#a8ff3e] mt-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8s-9-3.582-9-8a9 9 0 1118 0z" /></svg>
+              <textarea id="message" placeholder="Message" class="w-full p-3 bg-[#232526] rounded text-white h-32 focus:outline-none focus:ring-2 focus:ring-[#a8ff3e]" required></textarea>
+            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-[#a8ff3e] to-[#cfff70] text-black px-6 py-3 rounded font-semibold transition hover:from-[#cfff70] hover:to-[#a8ff3e] shadow-lg">Send Message</button>
+            <p id="formStatus" class="mt-4 text-[#a8ff3e] font-semibold hidden text-center"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("contactForm");
+        const status = document.getElementById("formStatus");
+        if (form) {
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            status.textContent = "Thank you for reaching out! I'll get back to you soon.";
+            status.classList.remove("hidden");
+            form.reset();
+          });
+        }
+      });
+    </script>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center text-gray-400 bg-[#111]">© 2025 Joe Michael Tanilon. All rights reserved.</footer>
+
+    <script>
+      AOS.init({ duration: 800, once: true });
+    </script>
+    <script>
+      // p5.js: Section-aware background effects
+      let stars = [];
+      let dots = [];
+      let mouseTrail = [];
+      const STAR_COUNT = 60;
+      const DOT_COUNT = 60;
+      let heroTop = 0,
+        heroBottom = 0,
+        skillsTop = 0,
+        contactBottom = 0;
+      function setup() {
+        let cnv = createCanvas(windowWidth, windowHeight);
+        cnv.id("p5-bg-canvas");
+        cnv.style("display", "block");
+        cnv.style("position", "fixed");
+        cnv.style("top", "0");
+        cnv.style("left", "0");
+        cnv.style("z-index", "0");
+        cnv.style("pointer-events", "none");
+        // Rain stars
+        stars = [];
+        for (let i = 0; i < STAR_COUNT; i++) {
+          stars.push({
+            x: random(width),
+            y: random(-height, 0),
+            len: random(10, 30),
+            speed: random(4, 10),
+            alpha: random(80, 180),
+            thick: random(1, 2.5),
+            color: color(168, 255, 62, random(80, 180)),
+          });
+        }
+        // Particles
+        dots = [];
+        for (let i = 0; i < DOT_COUNT; i++) {
+          dots.push({
+            x: random(width),
+            y: random(height),
+            r: random(2, 5),
+            dx: random(-0.5, 0.5),
+            dy: random(-0.5, 0.5),
+          });
+        }
+        mouseTrail = [];
+        updateSectionBounds();
+      }
+      function updateSectionBounds() {
+        let hero = document.getElementById("hero");
+        let skills = document.getElementById("services");
+        let contact = document.getElementById("contact");
+        if (hero && skills && contact) {
+          let rectHero = hero.getBoundingClientRect();
+          let rectSkills = skills.getBoundingClientRect();
+          let rectContact = contact.getBoundingClientRect();
+          let scrollY = window.scrollY || window.pageYOffset;
+          heroTop = rectHero.top + scrollY;
+          heroBottom = rectHero.bottom + scrollY;
+          skillsTop = rectSkills.top + scrollY;
+          contactBottom = rectContact.bottom + scrollY;
+        }
+      }
+      function draw() {
+        clear();
+        updateSectionBounds();
+        let scrollY = window.scrollY || window.pageYOffset;
+        // Strictly draw rain only within hero section bounds
+        let heroVisibleTop = Math.max(heroTop - scrollY, 0);
+        let heroVisibleBottom = Math.min(heroBottom - scrollY, height);
+        if (heroVisibleBottom > heroVisibleTop) {
+          for (let s of stars) {
+            // Only draw if the star is within the visible hero area
+            if (s.y + s.len > heroVisibleTop && s.y < heroVisibleBottom) {
+              let y1 = Math.max(s.y, heroVisibleTop);
+              let y2 = Math.min(s.y + s.len, heroVisibleBottom);
+              stroke(s.color);
+              strokeWeight(s.thick);
+              line(s.x, y1, s.x, y2);
+            }
+            s.y += s.speed;
+            if (s.y > heroVisibleBottom) {
+              s.y = heroVisibleTop - random(10, 40);
+              s.x = random(width);
+              s.len = random(10, 30);
+              s.speed = random(4, 10);
+              s.thick = random(1, 2.5);
+              s.color = color(168, 255, 62, random(80, 180));
+            }
+          }
+        }
+        // Particles and mouse trail from skills to contact
+        if (scrollY + height > skillsTop && scrollY < contactBottom) {
+          noStroke();
+          for (let d of dots) {
+            fill(168, 255, 62, 60);
+            ellipse(d.x, d.y, d.r * 2);
+            d.x += d.dx;
+            d.y += d.dy;
+            if (d.x < 0 || d.x > width) d.dx *= -1;
+            if (d.y < 0 || d.y > height) d.dy *= -1;
+          }
+          for (let i = 0; i < mouseTrail.length; i++) {
+            let t = mouseTrail[i];
+            fill(168, 255, 62, map(i, 0, mouseTrail.length, 80, 0));
+            ellipse(t.x, t.y, 18 - i * 1.2);
+          }
+          if (mouseTrail.length > 18) mouseTrail.shift();
+        }
+      }
+      function windowResized() {
+        resizeCanvas(windowWidth, windowHeight);
+        setup();
+      }
+      function mouseMoved() {
+        let scrollY = window.scrollY || window.pageYOffset;
+        if (scrollY + height > skillsTop && scrollY < contactBottom) {
+          mouseTrail.push({ x: mouseX, y: mouseY });
+        }
+      }
+    </script>
+    <script>
+      // Section reveal animation: alternate left/right slide in and out
+      document.addEventListener("DOMContentLoaded", function () {
+        const sections = document.querySelectorAll("section");
+        // Fix for GSAP miscalculation on scrollTo/nav jumps
+        ScrollTrigger.addEventListener("refreshInit", () => window.scrollBy(0, 1));
+        sections.forEach((section, i) => {
+          let fromX = i % 2 === 0 ? -120 : 120;
+          gsap.fromTo(
+            section,
+            { opacity: 0, x: fromX },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 1.2,
+              scrollTrigger: {
+                trigger: section,
+                start: "top 80%",
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse",
+                // play on enter, reverse on leave, play on re-enter, reverse on leave-back
+                invalidateOnRefresh: true,
+                // Ensure recalculation on nav jumps/resize
+              },
+              ease: "power3.out",
+            }
+          );
+        });
+        // Refresh ScrollTrigger after nav jump
+        document.querySelectorAll('a[href^="#"]').forEach((link) => {
+          link.addEventListener("click", () => {
+            setTimeout(() => ScrollTrigger.refresh(), 400);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
