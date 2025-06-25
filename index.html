@@ -52,8 +52,8 @@
   </head>
   <body class="overflow-x-hidden">
     <!-- Header -->
-    <header class="w-full fixed top-0 left-0 z-50 bg-black bg-opacity-80" x-data="{ open: false }">
-      <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+    <header class="fixed top-0 left-0 w-full z-50 bg-black bg-opacity-80" x-data="{ open: false }">
+      <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-4">
         <h1 class="text-2xl font-extrabold text-white">Joe<span class="highlight">Michael</span></h1>
 
         <!-- Desktop Nav -->
@@ -99,14 +99,14 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="hero" class="pt-24 h-screen md:pt-36 pb-16 px-6 bg-black text-center flex justify-center items-center just md:text-left">
+    <section id="hero" class="pt-24 mt-16 md:mt-0 h-screen md:pt-36 pb-16 px-6 bg-black text-center flex justify-center items-center just md:text-left">
       <div class="max-w-6xl mx-auto grid md:grid-cols-2 items-center gap-10">
         <div data-aos="fade-right">
           <p class="text-[#a8ff3e] font-semibold">Hello, I am</p>
           <h1 class="text-4xl md:text-6xl font-extrabold mt-2">Joe Michael Tanilon</h1>
           <p class="mt-4 text-gray-300 text-lg">A Software Engineer</p>
           <div class="mt-8 flex flex-col sm:flex-row gap-4">
-            <a href="Resume-JoeMichaelTanilon.pdf" download="Joe_Resume.pdf" class="bg-[#a8ff3e] text-black px-6 py-3 rounded font-semibold transition hover:bg-[#cfff70]">Download CV</a>
+            <a href="assets/Resume-JoeMichaelTanilon.pdf" download="Joe_Resume.pdf" class="bg-[#a8ff3e] text-black px-6 py-3 rounded font-semibold transition hover:bg-[#cfff70]">Download CV</a>
             <a href="#portfolio" class="border border-white px-6 py-3 rounded font-semibold transition hover:bg-white hover:text-black">My Work</a>
           </div>
         </div>
@@ -201,7 +201,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <!-- Project 1: Cogon Reservation -->
           <a href="https://cogonreservation.site" target="_blank" rel="noopener" class="block group">
-            <img src="cogon.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" alt="Cogon Reservation" />
+            <img src="assets/cogon.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" alt="Cogon Reservation" />
             <div class="mt-3 text-lg font-semibold text-white group-hover:text-[#a8ff3e]">CogonReservation.site</div>
             <div class="text-[#a8ff3e] text-sm mb-2">Room Reservation Web App</div>
             <div class="flex justify-center flex-wrap gap-2 mt-2">
@@ -215,7 +215,7 @@
 
           <!-- Project 2: Portfolio Website -->
           <a href="/" target="_blank" rel="noopener" class="block group">
-            <img src="portfolio.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="100" alt="Portfolio Website" />
+            <img src="assets/portfolio.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="100" alt="Portfolio Website" />
             <div class="mt-3 text-lg font-semibold text-white group-hover:text-[#a8ff3e]">Portfolio Website</div>
             <div class="text-[#a8ff3e] text-sm mb-2">Personal Portfolio Template</div>
             <div class="flex justify-center flex-wrap gap-2 mt-2">
@@ -227,7 +227,7 @@
 
           <!-- Project 3: UI/UX Dashboard -->
           <a href="https://dragondelivery.ct.ws/" target="_blank" rel="noopener" class="block group">
-            <img src="uidesign.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="200" alt="UI/UX Dashboard" />
+            <img src="assets/uidesign.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="200" alt="UI/UX Dashboard" />
             <div class="mt-3 text-lg font-semibold text-white group-hover:text-[#a8ff3e]">UI/UX Dashboard</div>
             <div class="text-[#a8ff3e] text-sm mb-2">Admin Dashboard Design</div>
             <div class="flex justify-center flex-wrap gap-2 mt-2">
@@ -238,7 +238,7 @@
           </a>
 
           <a href="https://ibcauto.com" target="_blank" rel="noopener" class="block group">
-            <img src="ibc.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="200" alt="UI/UX Dashboard" />
+            <img src="assets/ibc.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="200" alt="UI/UX Dashboard" />
             <div class="mt-3 text-lg font-semibold text-white group-hover:text-[#a8ff3e]">Work Project</div>
             <div class="text-[#a8ff3e] text-sm mb-2">Maintained And Develop Features</div>
             <div class="flex justify-center flex-wrap gap-2 mt-2">
@@ -248,7 +248,7 @@
           </a>
 
           <a href="https://logged.jetlogistics.co.jp/login" target="_blank" rel="noopener" class="block group">
-            <img src="jet.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="200" alt="UI/UX Dashboard" />
+            <img src="assets/jet.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="200" alt="UI/UX Dashboard" />
             <div class="mt-3 text-lg font-semibold text-white group-hover:text-[#a8ff3e]">Work Project</div>
             <div class="text-[#a8ff3e] text-sm mb-2">Maintained And Develop Features</div>
             <div class="flex justify-center flex-wrap gap-2 mt-2">
@@ -259,7 +259,7 @@
           </a>
 
           <a href="https://globalinspectionspecialist.com/home" target="_blank" rel="noopener" class="block group">
-            <img src="gis.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="200" alt="UI/UX Dashboard" />
+            <img src="assets/gis.jpg" class="rounded transition group-hover:opacity-80" data-aos="zoom-in" data-aos-delay="200" alt="UI/UX Dashboard" />
             <div class="mt-3 text-lg font-semibold text-white group-hover:text-[#a8ff3e]">Work Project</div>
             <div class="text-[#a8ff3e] text-sm mb-2">Maintained And Develop Features</div>
             <div class="flex justify-center flex-wrap gap-2 mt-2">
